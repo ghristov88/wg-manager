@@ -81,7 +81,7 @@ pipelineSettings
                                 .WithHost(HostX.Create('192.168.56.1', 22))
                                 .WithUsername("jenkins")
                                 .WithCredentialId("global-linux")
-                                .WithBaseDestinationPath("/var/data")
+                                .WithBaseDestinationPath("/home/jenkins")
                                 .WithDestinationPath("/wg-manager")
                                 .WithSourceFilesRelativePath(ps.SourceFilesRelativePath)
                                 .WithExcludedItems(excludedItems)
