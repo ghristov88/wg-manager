@@ -43,6 +43,7 @@ pipelineSettings.ChatClientType = ChatClientTypeX.Mattermost
 pipelineSettings
     .AddDeploymentTool(DeploymentToolX.Rsync)
     .WithStepName("Deploy")
+    .WithExecutionTimeout(TimeSpan.FromMinutes(20))
     .WithOption("--no-o --no-g --no-t")
 
 pipelineSettings
