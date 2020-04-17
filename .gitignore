@@ -67,3 +67,5 @@ wg-dashboard-py.iml
 docker/wg0.conf
 
 wg_dashboard_backend/database.db
+
+.env
