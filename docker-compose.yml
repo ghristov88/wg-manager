@@ -1,11 +1,13 @@
-wireguard:
-    container_name: wg-manager
-    image: ghristov88/wg-manager:latest
-    cap_add:
-        - NET_ADMIN
-    network_mode: host
-    volumes:
-        - /srv/wg-manager/config:/config
-    restart: unless-stopped
-    env_file:
-        - .env
+version: "3.6"
+services:
+    wireguard:
+        container_name: wg-manager
+        image: ghristov88/wg-manager:latest
+        cap_add:
+            - NET_ADMIN
+        network_mode: "host"
+        volumes:
+            - /srv/wg-manager/config:/config
+        restart: unless-stopped
+        env_file:
+            - .env
