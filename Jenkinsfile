@@ -92,8 +92,8 @@ pipelineSettings
                                 deployment
                                     .RemoteExecuteAfterDeploy("cd ${deployment.BaseDestinationPath}${deployment.DestinationPath}")
                                     .RemoteExecuteAfterDeploy("docker build ${dockerBuildOptions} -t ghristov88/wg-manager -t ghristov88/wg-manager:latest-${currentBuild.number} -f Dockerfile .")
-                                    // .RemoteExecuteAfterDeploy("echo ''")
-                                    // .RemoteExecuteAfterDeploy("time docker-compose -f docker-compose.prod.yml up -d")
+                                    .RemoteExecuteAfterDeploy("echo ''")
+                                    .RemoteExecuteAfterDeploy("time docker-compose -f docker-compose.yml up -d")
                             })
                     )
             }
