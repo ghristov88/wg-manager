@@ -55,7 +55,7 @@ pipelineSettings
     // .WithVersionChangeFor(mainBranchName)
     .WithReleaseNotificationEmails('')
     .WithFailureNotificationEmails('')
-    .When({ -> env.BRANCH_NAME == ciBranchName },
+    .When({ -> env.BRANCH_NAME == devBranchName },
     { ps -> ps.WithParameter(
         booleanParam(name: cacheParameterName, defaultValue: true, description: 'Use cache when building the image'),
         { paramSettings -> paramSettings.WithName(cacheParameterName) })
