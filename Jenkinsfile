@@ -99,7 +99,7 @@ pipelineSettings
                     )
             }
         }
-        else f (ps.IsCurrentBranch(abWireguardBranchName)) {
+        else if (ps.IsCurrentBranch(abWireguardBranchName)) {
             if (ps.IsMainBuildId()) {
 
                 Boolean cacheValue =  params.get(cacheParameterName)
