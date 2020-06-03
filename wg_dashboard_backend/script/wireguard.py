@@ -5,6 +5,7 @@ import tempfile
 import typing
 
 import const
+import models
 import schemas
 import os
 import re
@@ -107,7 +108,7 @@ def restart_interface(server: schemas.WGServer):
 def is_running(server: schemas.WGServer):
     try:
         output = _run_wg(server, ["show", server.interface])
-        if output is None:
+        if output is None or b'Unable to access interface: No such device' in output:
             return False
     except Exception as e:
         if b'No such device' in e.output:
@@ -159,9 +160,9 @@ def get_stats(server: schemas.WGServer):
                     rx=None,
                     tx=None
                 ))
-            elif len(lines) == 5:
-
-                public_key, client_endpoint, allowed_ips, handshake, rx_tx = lines
+            elif len(lines) == 5 or len(lines) == 6:
+                public_key = lines[0]
+                client_endpoint, allowed_ips, handshake, rx_tx = lines[-4:]  # [1] is sometimes psk
 
                 rx = re.match(r"^(.*) received", rx_tx).group(1)
                 tx = re.match(r"^.*, (.*)sent", rx_tx).group(1)
@@ -173,6 +174,7 @@ def get_stats(server: schemas.WGServer):
                     rx=rx,
                     tx=tx
                 ))
+
             else:
                 ValueError("We have not handled peers with line number of %s" % str(len(lines)))
 
@@ -195,7 +197,7 @@ def move_server_dir(interface, interface1):
 def generate_config(obj: typing.Union[typing.Dict[schemas.WGPeer, schemas.WGServer], schemas.WGServer]):
     if isinstance(obj, dict) and "server" in obj and "peer" in obj:
         template = "peer.j2"
-    elif isinstance(obj, schemas.WGServer):
+    elif isinstance(obj, schemas.WGServer) or isinstance(obj, models.WGServer):
         template = "server.j2"
     else:
         raise ValueError("Incorrect input type. Should be WGPeer or WGServer")
